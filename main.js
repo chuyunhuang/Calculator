@@ -7,7 +7,7 @@ class Calculator {
   clear() {
     this.previousOperand = '';
     this.currentOperand = '';
-    this.operation = undefined
+    this.operation = undefined;
   }
   delete() {
     this.currentOperand = this.currentOperand.toString().slice(0, -1)
@@ -48,16 +48,27 @@ class Calculator {
         break
     }
     this.currentOperand = computation
-    this.operation = undefined
+    this.operation = ''
     this.previousOperand = ''
 
   }
 
   // helper function to format the number to include periods
   getDisplayNumber(number) {
-    const floatNumber = parseFloat(number)
-    if (isNaN(floatNumber)) return ''
-    return floatNumber.toLocaleString('en')
+    const stringNumber = number.toString()
+    const intergerDigits = parseFloat(stringNumber.split('.')[0])
+    const decimalDigits = stringNumber.split('.')[1]
+    let intergerDisplay
+    if (isNaN(intergerDigits)) {
+      intergerDisplay = ''
+    } else {
+      intergerDisplay = intergerDigits.toLocaleString('en', { maximumFractionDigits: 0 })
+    }
+    if (decimalDigits != null) {
+      return `${intergerDisplay}. ${decimalDigits}`
+    } else {
+      return intergerDisplay
+    }
   }
 
   updateDisplay() {
